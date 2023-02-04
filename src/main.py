@@ -8,6 +8,9 @@ app.config["SECRET_KEY"] = "secret"
 
 @app.route("/")
 def index():
+    if session['login']:
+        return redirect(url_for("home"))
+
     return render_template("index.html")
 
 
