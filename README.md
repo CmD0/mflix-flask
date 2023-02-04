@@ -6,7 +6,7 @@ A flask based web application that uses the MongoDB mflix sample dataset
 - navigate to it
 - python -m virtualenv ./env
 - activate the virtual environment
-- pip install -r requirements
+- pip install -r requirements.txt
 
 
 ## Execute ##
