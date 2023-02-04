@@ -1,14 +1,53 @@
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for, request, session
+import bcrypt
 import database_operations as db_ops
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "secret"
 
 
 @app.route("/")
-def hello_world():
-    db = db_ops.get_database()
-    movies = db.movies
-    movie = movies.find_one()
-    title = movie["title"]
-    response = f"Hello, {title}!"
-    return response
+def index():
+    return render_template("index.html")
+
+
+@app.route("/home")
+def home():
+    return render_template("home.html")
+
+
+@app.route("/login", methods=["POST"])
+def login():
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+    user = db_ops.get_document("users", {"email": email})
+    auth = bcrypt.checkpw(password.encode("utf-8"),
+                          user["password"].encode("utf-8"))
+
+    if auth:
+        session["user"] = user["name"]
+        session["email"] = user["email"]
+        session["login"] = True
+        return redirect(url_for("home"))
+    else:
+        return "Invalid credentials. <a href='/index'>try again</a>"
+
+
+@ app.route("/register", methods=["POST"])
+def register():
+    if request.method == "POST":
+        users = db_ops.get_collection("users")
+        password = request.form.get("password")
+        hash_password = bcrypt.hashpw(
+            password.encode('utf-8'), bcrypt.gensalt())
+
+        users.insert_one({
+            "name": request.form.get("name"),
+            "email": request.form.get("email"),
+            "password": str(hash_password).removeprefix("b'").removesuffix("'")
+        })
+
+        return redirect(url_for("home"))
+    else:
+        return redirect(url_for("index"))
