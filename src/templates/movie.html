@@ -8,8 +8,9 @@
             <p>{{movie.plot}}</p>
             <p>Rated: {{movie.rated}}</p>
             <p>
-                🎬: {{movie.imdb.rating}} <br />
-                🍅: {{movie.tomatoes.viewer.rating}}
+                {% if movie.imdb%} 🎬: {{movie.imdb.rating}}/10 <br />
+                {% endif %} {% if movie.tomatoes %} 🍅:
+                {{movie.tomatoes.viewer.rating}}/5 {% endif %}
             </p>
             <p>Cast:</p>
             <ul>

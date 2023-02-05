@@ -27,14 +27,6 @@ def home():
     return render_template("home.html")
 
 
-@app.route("/movie")
-def movie():
-    movie_id = request.args.get("id")
-    print(movie_id)
-    movie = db_ops.get_document("movies", {"_id": objectid.ObjectId(movie_id)})
-    return render_template("movie.html", movie=movie)
-
-
 @app.route("/movies")
 def movies():
     if session:
@@ -57,8 +49,20 @@ def movies():
             )
 
             return render_template("movies.html", action_movies=action_movies, fantasy_movies=fantasy_movies, horror_movies=horror_movies)
-    else:
-        return redirect(url_for("index"))
+    return redirect(url_for("index"))
+
+
+@app.route("/movie")
+def movie():
+    if session:
+        if session["login"]:
+            movie_id = request.args.get("id")
+            print(movie_id)
+            movie = db_ops.get_document(
+                "movies", {"_id": objectid.ObjectId(movie_id)}
+            )
+            return render_template("movie.html", movie=movie)
+    return redirect(url_for("index"))
 
 
 @ app.route("/about")
@@ -84,15 +88,18 @@ def login():
         session.permanent = True
         return redirect(url_for("home"))
     else:
-        return "Invalid credentials. <a href='/'>try again</a>"
+        url = url_for("index")
+        return f"Invalid credentials. <a href='{url}'>try again</a>"
 
 
 @ app.route("/register", methods=["POST"])
 def register():
     users = db_ops.get_collection("users")
+
     password = request.form.get("password")
     hash_password = bcrypt.hashpw(
         password.encode('utf-8'), bcrypt.gensalt())
+
     users.insert_one({
         "name": request.form.get("name"),
         "email": request.form.get("email"),
