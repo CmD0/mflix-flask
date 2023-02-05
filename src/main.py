@@ -2,6 +2,7 @@ from datetime import timedelta
 from flask import Flask, render_template, redirect, url_for, request, session
 import bcrypt
 import database_operations as db_ops
+from bson import objectid
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret"
@@ -24,6 +25,14 @@ def index():
 @app.route("/home")
 def home():
     return render_template("home.html")
+
+
+@app.route("/movie")
+def movie():
+    movie_id = request.args.get("id")
+    print(movie_id)
+    movie = db_ops.get_document("movies", {"_id": objectid.ObjectId(movie_id)})
+    return render_template("movie.html", movie=movie)
 
 
 @app.route("/movies")

@@ -1,52 +1,68 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    <br/>
-    <h1>{% block title %}Movies{% endblock %}</h1>
-    <br/>
-    <h2>Action Movies</h2>
-    <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap overflow-auto">
-            {% for movie in action_movies %}
-                <div class="card card-body">
-                    <h5 class="card-title">{{ movie.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
-                    {% if movie.poster %}
-                        <img src="{{ movie.poster }}" class="card-img-top poster" alt="...">
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
+{% extends 'base.html' %} {% block content %}
+<br />
+<h1>{% block title %}Movies{% endblock %}</h1>
+<br />
+<h2>Action Movies</h2>
+<div class="container-fluid py-2">
+    <div class="d-flex flex-row flex-nowrap overflow-auto">
+        {% for movie in action_movies %}
+        <a href="{{url_for('movie')}}?id={{movie['_id']}}">
+            <div class="card card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
+                {% if movie.poster %}
+                <img
+                    src="{{ movie.poster }}"
+                    class="card-img-top poster"
+                    alt="..."
+                />
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
     </div>
+</div>
 
-    <h2>Fantasy Movies</h2>
-    <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap overflow-auto">
-            {% for movie in fantasy_movies %}
-                <div class="card card-body">
-                    <h5 class="card-title">{{ movie.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
-                    {% if movie.poster %}
-                        <img src="{{ movie.poster }}" class="card-img-top poster" alt="...">
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
+<h2>Fantasy Movies</h2>
+<div class="container-fluid py-2">
+    <div class="d-flex flex-row flex-nowrap overflow-auto">
+        {% for movie in fantasy_movies %}
+        <a href="{{url_for('movie')}}?id={{movie['_id']}}">
+            <div class="card card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
+                {% if movie.poster %}
+                <img
+                    src="{{ movie.poster }}"
+                    class="card-img-top poster"
+                    alt="..."
+                />
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
     </div>
+</div>
 
-    <h2>Horror Movies</h2>
-    <div class="container-fluid py-2">
-        <div class="d-flex flex-row flex-nowrap overflow-auto">
-            {% for movie in horror_movies %}
-                <div class="card card-body">
-                    <h5 class="card-title">{{ movie.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
-                    {% if movie.poster %}
-                        <img src="{{ movie.poster }}" class="card-img-top poster" alt="...">
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
+<h2>Horror Movies</h2>
+<div class="container-fluid py-2">
+    <div class="d-flex flex-row flex-nowrap overflow-auto">
+        {% for movie in horror_movies %}
+        <a href="{{url_for('movie')}}?id={{movie['_id']}}">
+            <div class="card card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
+                {% if movie.poster %}
+                <img
+                    src="{{ movie.poster }}"
+                    class="card-img-top poster"
+                    alt="..."
+                />
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
     </div>
+</div>
 
 {% endblock %}

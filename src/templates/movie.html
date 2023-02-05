@@ -1,0 +1,44 @@
+{%extends 'base.html'%} {%block content%}
+
+<div class="container-fluid py-2">
+    <div class="d-flex flex-row flex-nowrap">
+        <div class="card card-body movie-info">
+            <h4>{%block title%} {{movie.title}} {%endblock%}</h4>
+            <h5>{{movie.year}}</h5>
+            <p>{{movie.plot}}</p>
+            <p>Rated: {{movie.rated}}</p>
+            <p>
+                🎬: {{movie.imdb.rating}} <br />
+                🍅: {{movie.tomatoes.viewer.rating}}
+            </p>
+            <p>Cast:</p>
+            <ul>
+                {%for actor in movie.cast%}
+                <li>{{actor}}</li>
+                {%endfor%}
+            </ul>
+            <p>Genre:</p>
+            <ul>
+                {%for genre in movie.genres%}
+                <li>{{genre}}</li>
+                {%endfor%}
+            </ul>
+            <p>Director(s)</p>
+            <ul>
+                {%for director in movie.directors%}
+                <li>{{director}}</li>
+                {%endfor%}
+            </ul>
+            <p>Writer(s)</p>
+            <ul>
+                {%for writer in movie.writers%}
+                <li>{{writer}}</li>
+                {%endfor%}
+            </ul>
+        </div>
+        <div class="movie-poster">
+            <img src="{{movie.poster}}" alt="" style="width: 100%" />
+        </div>
+    </div>
+</div>
+{%endblock%}
