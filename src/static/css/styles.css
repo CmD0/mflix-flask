@@ -1,7 +1,18 @@
 
-h1 {
-    border: 2px #eee solid;
-    color: brown;
-    text-align: center;
-    padding: 10px;
+.card-body {
+    min-height: 300px;
+    min-width: 300px;
+}
+
+.poster {
+    max-height: 200px;
+    max-width: 150px;
+}
+
+.form {
+    height: 100%;
+    width: 33%;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -22,6 +22,8 @@ def get_document(collection_name, query: dict):
     return collection.find_one(query)
 
 
-def get_many_documents(collection_name, query: dict):
+def get_many_documents(collection_name, query: dict, results: int = 0):
     collection = get_collection(collection_name)
-    return collection.find(query)
+    if results == 0:
+        return collection.find(query)
+    return collection.find(query, limit=results)

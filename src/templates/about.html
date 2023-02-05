@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} About MFlix-Flask {% endblock %}</h1>
+    
+    <p>
+        This is a Flask application that uses <a href="https://www.mongodb.com/">MongoDB</a>'s MFlix sample dataset.
+    </p>
+    <h6>Features:</h6>
+    <ul>
+        <li>Account registration and login (I don't have SSL so don't use a real world password)</li>
+        <li>User home page with nothing on it</li>
+        <li>A movies page where you can browse movies by genre</li>
+    </ul>
+
+    <p>Made by Elouan Hildgen-Poirier (CmD0)</p>
+
+{% endblock %}
