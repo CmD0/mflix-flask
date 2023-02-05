@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from flask import Flask, render_template, redirect, url_for, request, session
 import bcrypt
 import database_operations as db_ops
@@ -8,18 +9,21 @@ app.config["SECRET_KEY"] = "secret"
 
 @app.route("/")
 def index():
-    if session['login']:
-        return redirect(url_for("home"))
-
+    if session:
+        if datetime.now() - datetime.strptime(session["timestamp"], "%y-%m-%d %H:%M:%S") > timedelta(minutes=5):
+            session.clear()
+            return render_template("index.html")
+        elif session["login"]:
+            return redirect(url_for("home"))
     return render_template("index.html")
 
 
-@app.route("/home")
+@ app.route("/home")
 def home():
     return render_template("home.html")
 
 
-@app.route("/login", methods=["POST"])
+@ app.route("/login", methods=["POST"])
 def login():
 
     email = request.form.get("email")
@@ -32,6 +36,7 @@ def login():
         session["user"] = user["name"]
         session["email"] = user["email"]
         session["login"] = True
+        session["timestamp"] = datetime.now().strftime("%y-%m-%d %H:%M:%S")
         return redirect(url_for("home"))
     else:
         return "Invalid credentials. <a href='/index'>try again</a>"
@@ -53,4 +58,4 @@ def register():
 
         return redirect(url_for("home"))
     else:
-        return redirect(url_for("index"))
+        return redirect(url_for("/"))
