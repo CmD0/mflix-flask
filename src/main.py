@@ -49,12 +49,12 @@ def movies():
         return redirect(url_for("index"))
 
 
-@ app.route("/about")
+@app.route("/about")
 def about():
     return render_template("about.html")
 
 
-@ app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def login():
 
     email = request.form.get("email")
@@ -75,7 +75,7 @@ def login():
         return "Invalid credentials. <a href='/'>try again</a>"
 
 
-@ app.route("/register", methods=["POST"])
+@app.route("/register", methods=["POST"])
 def register():
     users = db_ops.get_collection("users")
     password = request.form.get("password")
@@ -87,3 +87,9 @@ def register():
         "password": str(hash_password).removeprefix("b'").removesuffix("'")
     })
     return redirect(url_for("home"))
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
