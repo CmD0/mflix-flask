@@ -32,16 +32,19 @@ def movies():
         if session["login"]:
             action_movies = db_ops.get_many_documents(
                 "movies", {"genres": "Action",
-                           "poster": {"$exists": "true"}}, 15
+                           "poster": {"$exists": "true"},
+                           "year": {"$gt": 2010}}, 15
             )
 
             fantasy_movies = db_ops.get_many_documents(
                 "movies", {"genres": "Fantasy",
-                           "poster": {"$exists": "true"}}, 15
+                           "poster": {"$exists": "true"},
+                           "year": {"$gt": 2010}}, 15
             )
             horror_movies = db_ops.get_many_documents(
                 "movies", {"genres": "Horror",
-                           "poster": {"$exists": "true"}}, 15
+                           "poster": {"$exists": "true"},
+                           "year": {"$gt": 2010}}, 15
             )
 
             return render_template("movies.html", action_movies=action_movies, fantasy_movies=fantasy_movies, horror_movies=horror_movies)
@@ -49,12 +52,12 @@ def movies():
         return redirect(url_for("index"))
 
 
-@app.route("/about")
+@ app.route("/about")
 def about():
     return render_template("about.html")
 
 
-@app.route("/login", methods=["POST"])
+@ app.route("/login", methods=["POST"])
 def login():
 
     email = request.form.get("email")
@@ -75,7 +78,7 @@ def login():
         return "Invalid credentials. <a href='/'>try again</a>"
 
 
-@app.route("/register", methods=["POST"])
+@ app.route("/register", methods=["POST"])
 def register():
     users = db_ops.get_collection("users")
     password = request.form.get("password")
@@ -89,7 +92,7 @@ def register():
     return redirect(url_for("home"))
 
 
-@app.route("/logout")
+@ app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("index"))

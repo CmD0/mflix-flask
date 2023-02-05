@@ -1,4 +1,8 @@
 
+h1 {
+    margin: 15px 0;
+}
+
 .card-body {
     min-height: 300px;
     min-width: 300px;
@@ -10,8 +14,9 @@
 }
 
 .form {
+    padding: 10px;
     height: 100%;
-    width: 33%;
+    width: 45%;
     margin-top: 0;
     margin-left: auto;
     margin-right: auto;

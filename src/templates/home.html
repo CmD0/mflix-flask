@@ -2,9 +2,6 @@
 <h1>{% block title %} Welcome to MFlix {% endblock %}</h1>
 {% if session['login'] %}
 <h4>Hi {{ session['user'] }}</h4>
-<a class="btn btn-outline-success my-2 my-sm-0" href="{{ url_for('logout') }}">
-    Logout
-</a>
 {% else %}
 <p>Please <a href="{{ url_for('index')}}">log in here</a></p>
 {% endif %} {% endblock %}
