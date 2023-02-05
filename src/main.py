@@ -5,7 +5,7 @@ import database_operations as db_ops
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret"
-app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=1)
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(hours=1)
 
 
 @app.before_request
