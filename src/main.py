@@ -15,10 +15,12 @@ def update_session():
 
 
 @app.route("/")
-def index():
+def index(error=None):
     if session:
-        if session["login"]:
+        if session.get('login'):
             return redirect(url_for("home"))
+        if session.get('error'):
+            return render_template("index.html", error=session.get('error'))
     return render_template("index.html")
 
 
@@ -81,14 +83,15 @@ def login():
                           user["password"].encode("utf-8"))
 
     if auth:
+        session.clear()
         session["user"] = user["name"]
         session["email"] = user["email"]
         session["login"] = True
         session.permanent = True
         return redirect(url_for("home"))
     else:
-        url = url_for("index")
-        return f"Invalid credentials. <a href='{url}'>try again</a>"
+        session['error'] = "Invalid credentials, try again."
+        return redirect(url_for("index"))
 
 
 @ app.route("/register", methods=["POST"])

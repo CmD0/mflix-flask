@@ -13,13 +13,16 @@ h1 {
     max-width: 150px;
 }
 
-.form {
+.form-container {
     padding: 10px;
     height: 100%;
     width: 45%;
     margin-top: 0;
     margin-left: auto;
     margin-right: auto;
+}
+.form {
+    padding: 10px;
 }
 .movie-info {
     padding: 10px;
