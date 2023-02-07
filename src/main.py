@@ -57,7 +57,6 @@ def movie():
     if session:
         if session["login"]:
             movie_id = request.args.get("id")
-            print(movie_id)
             movie = db_ops.get_document(
                 "movies", {"_id": objectid.ObjectId(movie_id)}
             )
