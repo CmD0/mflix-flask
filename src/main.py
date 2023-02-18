@@ -33,6 +33,20 @@ def home():
 def movies():
     if session:
         if session["login"]:
+            if session.get("query"):
+                query = session.get("query")
+                session.pop("query")
+                query_movies = db_ops.get_many_documents(
+                    "movies", {
+                        "title": {"$regex": ".*"+query+".*"},
+                        "poster": {"$exists": "true"}
+                    }
+                ).sort("year", -1)
+                return render_template("movies.html",
+                                       query_movies=query_movies,
+                                       search=True,
+                                       query=query)
+
             action_movies = db_ops.get_many_documents(
                 "movies", {"genres": "Action",
                            "poster": {"$exists": "true"},
@@ -50,7 +64,10 @@ def movies():
                            "year": {"$gt": 2010}}, 15
             )
 
-            return render_template("movies.html", action_movies=action_movies, fantasy_movies=fantasy_movies, horror_movies=horror_movies)
+            return render_template("movies.html",
+                                   action_movies=action_movies,
+                                   fantasy_movies=fantasy_movies,
+                                   horror_movies=horror_movies)
     return redirect(url_for("index"))
 
 
@@ -63,6 +80,16 @@ def movie():
                 "movies", {"_id": objectid.ObjectId(movie_id)}
             )
             return render_template("movie.html", movie=movie)
+    return redirect(url_for("index"))
+
+
+@app.route("/search", methods=["POST"])
+def search():
+    if session:
+        if session["login"]:
+            query = request.form.get("query")
+            session["query"] = query
+            return redirect(url_for("movies"))
     return redirect(url_for("index"))
 
 
