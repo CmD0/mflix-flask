@@ -1,4 +1,5 @@
 from datetime import timedelta
+import re
 from flask import Flask, render_template, redirect, url_for, request, session
 import bcrypt
 import database_operations as db_ops
@@ -36,6 +37,7 @@ def movies():
             if session.get("query"):
                 query = session.get("query")
                 session.pop("query")
+                query = re.sub("[\[\]{}\"']+", "", query)
                 query_movies = db_ops.get_many_documents(
                     "movies", {
                         "title": {"$regex": ".*"+query+".*"},
